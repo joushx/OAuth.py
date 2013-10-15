@@ -1,4 +1,4 @@
-from oauth import OAuth, OAuthUrl
+from oauth import OAuth
 
 class Twitter(OAuth):
 
