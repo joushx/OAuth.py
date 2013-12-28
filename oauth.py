@@ -66,7 +66,7 @@ class OAuth(object):
 		self.token = response["oauth_token"][0]
 		self.secret = response["oauth_token_secret"][0]
 
-	def get(self, method, path):
+	def get(self, method, path, params=[]):
 		url = OAuthUrl()
 		url.flush()
 		url.setMethod(method)
@@ -77,6 +77,10 @@ class OAuth(object):
 		url.addParam("oauth_consumer_key", self.consumer_key)
 		url.addParam("oauth_signature_method", "HMAC-SHA1")
 		url.addParam("oauth_token", self.token)
+
+		for param in params:
+			url.addParam(param[0],param[1])
+
 		url.sortParams()
 		return url.signRequest(self.consumer_secret, self.secret)
 
@@ -84,6 +88,10 @@ class OAuth(object):
 		response = urllib2.urlopen(url)
 		data = response.read()
 		return parse_qs(data)
+
+	def setToken(self,token,secret):
+		self.token = token
+		self.secret = secret
 
 class OAuthUrl(object):
 
