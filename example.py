@@ -1,3 +1,5 @@
+from twitter import *
+
 o = Twitter("your-consumer-key","your-consumer-secret")
 o.getRequestToken()
 print o.getAuthorizeUrl()
